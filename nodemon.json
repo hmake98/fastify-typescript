@@ -8,7 +8,7 @@
     "ignore": [
         "src/**/*.spec.ts"
     ],
-    "exec": "npm run build && npm start",
+    "exec": "ts-node src/index",
     "env": {
         "NODE_DEBUG": 9229,
         "NODE_ENV": "development"

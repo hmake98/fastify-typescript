@@ -1,4 +1,4 @@
-import fastify, { FastifyLoggerInstance } from 'fastify';
+import fastify from 'fastify';
 import { PrismaClient } from '@prisma/client';
 
 export const prisma = new PrismaClient();
@@ -6,8 +6,6 @@ export const prisma = new PrismaClient();
 // Load env vars
 import loadConfig from './config';
 loadConfig();
-
-export let logger: FastifyLoggerInstance
 
 export const createServer = async () => {
     const server = fastify({
@@ -34,6 +32,13 @@ export const startServer = async () => {
     const server = await createServer();
 
     await server.listen(process.env.API_PORT, process.env.API_HOST);
+
+    prisma.$connect().then(() => {
+        console.log('Database connected')
+    }).catch((err) => {
+        console.error('Database connection failed!')
+        console.log(err)
+    })
 
     if (process.env.NODE_ENV === 'production') {
         for (const signal of ['SIGINT', 'SIGTERM']) {

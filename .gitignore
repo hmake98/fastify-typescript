@@ -58,3 +58,4 @@ profile*
 *flamegraph*
 
 build/
+.env

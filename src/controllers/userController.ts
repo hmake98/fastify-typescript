@@ -1,9 +1,9 @@
 import fastify, { FastifyReply } from 'fastify';
 import { IUserRequest } from '../interface/iuser';
-import { logger, prisma } from '../index';
+import { prisma } from '../index';
 import { ERRORS } from '../helpers/errors';
 import * as JWT from 'jsonwebtoken'
-import { utils } from 'helpers/utils';
+import { utils } from '../helpers/utils';
 
 export const login = async (req: IUserRequest, res: FastifyReply) => {
     try {
@@ -15,12 +15,12 @@ export const login = async (req: IUserRequest, res: FastifyReply) => {
         const user = await prisma.user.findUnique({ where: { email: email } })
 
         if (!user) {
-            logger.error(ERRORS.userNotExists.message)
+            console.error(ERRORS.userNotExists.message)
             return ERRORS.userNotExists;
         }
 
         if (!utils.compareHash(password, user.password)) {
-            logger.error(ERRORS.userCredError.message)
+            console.error(ERRORS.userCredError.message)
             return ERRORS.userCredError;
         }
 
@@ -34,7 +34,7 @@ export const login = async (req: IUserRequest, res: FastifyReply) => {
             user
         }
     } catch (err) {
-        logger.error(err)
+        console.log(err)
         return new Error(err)
     }
 }
@@ -51,18 +51,19 @@ export const signUp = async (req: IUserRequest, res: FastifyReply) => {
         const user = await prisma.user.findUnique({ where: { email: email } })
 
         if (user) {
-            logger.error(ERRORS.userExists.message)
+            console.error(ERRORS.userExists.message)
             return ERRORS.userExists;
         }
 
-        const hashPass = String(utils.genSalt(10, password))
+        const hashPass = await utils.genSalt(10, password)
+        console.log(hashPass)
 
         const createUser = await prisma.user.create({
             data: {
                 email,
                 firstName,
                 lastName,
-                password: hashPass,
+                password: String(hashPass),
             }
         })
 
@@ -71,12 +72,13 @@ export const signUp = async (req: IUserRequest, res: FastifyReply) => {
             email: createUser.email
         }, process.env.APP_JWT_SECRET);
 
+        delete createUser.password
         return {
             token,
             user: createUser
         }
     } catch (err) {
-        logger.error(err)
+        console.log(err)
         return new Error(err)
     }
 }

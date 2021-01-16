@@ -10,7 +10,8 @@
     "postinstall": "npx typesync",
     "prisma": "npx prisma",
     "prisma:gen": "npx prisma generate",
-    "prisma:migrate": "npx prisma migrate"
+    "prisma:dep": "npx prisma migrate deploy --preview-feature",
+    "prisma:save": "npx prisma db push --preview-feature"
   },
   "repository": {
     "type": "git",

@@ -15,14 +15,16 @@ export const utils = {
         return time
     },
     genSalt: (saltRounds, value) => {
-        bcrypt.hash(value, saltRounds, (err, hash): string => {
-            if (err) return err
-            else return hash
+        return new Promise((resolve, reject) => {
+            bcrypt.hash(value, saltRounds, (err, hash) => {
+                if (err) reject(err)
+                resolve(hash)
+            })
         })
     },
     compareHash: (hash, value) => {
         let response: boolean
-        bcrypt.compare(value, hash, (err, result): boolean => {
+        bcrypt.compare(value, hash, (err, result): boolean | any => {
             if (err) return err
             response = result
         })
