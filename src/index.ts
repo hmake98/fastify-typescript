@@ -1,20 +1,20 @@
-import fastify from 'fastify';
-import path from 'path';
+import fastify, { FastifyLoggerInstance } from 'fastify';
+import { PrismaClient } from '@prisma/client';
+
+export const prisma = new PrismaClient();
 
 // Load env vars
 import loadConfig from './config';
 loadConfig();
 
+export let logger: FastifyLoggerInstance
+
 export const createServer = async () => {
     const server = fastify({
         logger: { level: process.env.LOG_LEVEL },
     });
-    
+
     server.register(require('./routes/index'))
-    
-    server.register(require('fastify-jwt'), {
-        secret: process.env.APP_JWT_SECRET
-    })
 
     server.register(require('fastify-formbody'))
     server.register(require('fastify-cors'))
