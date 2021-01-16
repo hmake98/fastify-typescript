@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "module": "commonjs",
+        "target": "ES2018",
+        "outDir": "build",
+        "lib": [
+            "esnext",
+            "dom"
+        ],
+        // "strict": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "strictBindCallApply": true,
+        "strictFunctionTypes": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "noUnusedParameters": false
+    },
+    "include": [
+        "src"
+    ]
+}

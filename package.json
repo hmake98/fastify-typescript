@@ -1,0 +1,44 @@
+{
+  "name": "fastify-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "tap test/**/*.test.js",
+    "start": "fastify start -l info app.js",
+    "dev": "fastify start -w -l info -P app.js",
+    "postinstall": "npx typesync"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hmake98/fastify-typescript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hmake98/fastify-typescript/issues"
+  },
+  "homepage": "https://github.com/hmake98/fastify-typescript#readme",
+  "dependencies": {
+    "aws-sdk": "^2.817.0",
+    "dotenv": "^8.2.0",
+    "fastify": "^3.0.0",
+    "fastify-autoload": "^3.0.2",
+    "fastify-cli": "^2.6.0",
+    "fastify-mongodb": "^2.0.1",
+    "fastify-now": "^2.3.0",
+    "fastify-plugin": "^3.0.0",
+    "mongoose": "^5.11.8"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.10.3",
+    "cross-env": "^7.0.0",
+    "tap": "^14.0.0",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  }
+}
