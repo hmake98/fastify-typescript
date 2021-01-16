@@ -9,24 +9,11 @@ export const createServer = async () => {
     const server = fastify({
         logger: { level: process.env.LOG_LEVEL },
     });
-
-    server.register(require('fastify-autoload'), {
-        dir: path.join(__dirname, './routes')
-    })
-
+    
+    server.register(require('./routes/index'))
+    
     server.register(require('fastify-jwt'), {
         secret: process.env.APP_JWT_SECRET
-    })
-
-    server.register(require('fastify-multipart'), {
-        limits: {
-            fieldNameSize: 100, // Max field name size in bytes
-            fieldSize: 1000000, // Max field value size in bytes
-            fields: 10,         // Max number of non-file fields
-            fileSize: 100,      // For multipart forms, the max file size
-            files: 1,           // Max number of file fields
-            headerPairs: 2000   // Max number of header key=>value pairs
-        }
     })
 
     server.register(require('fastify-formbody'))

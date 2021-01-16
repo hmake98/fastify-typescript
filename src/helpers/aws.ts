@@ -3,7 +3,7 @@ import fs from 'fs'
 import { awsConfig } from '../config'
 import { utils } from './utils'
 import { extname } from 'path'
-import { File } from './../interface/File';
+import { File } from '../interface/ifile';
 
 const s3 = new S3();
 
