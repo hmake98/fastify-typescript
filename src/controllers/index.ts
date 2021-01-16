@@ -1,5 +1,2 @@
-import { userController } from './userController';
+export * as userControllers from './userController';
 
-export {
-    userController
-}

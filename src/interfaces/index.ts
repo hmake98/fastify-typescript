@@ -1,1 +1,0 @@
-export { IUserController } from './icontroller'

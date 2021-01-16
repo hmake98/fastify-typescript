@@ -1,24 +1,28 @@
 {
     "compilerOptions": {
-        "sourceMap": true,
-        "module": "commonjs",
-        "target": "ES2018",
-        "outDir": "build",
         "lib": [
-            "esnext",
-            "dom"
+            "es2020"
         ],
-        // "strict": true,
-        "noImplicitAny": true,
-        "noImplicitThis": true,
-        "alwaysStrict": true,
-        "strictBindCallApply": true,
-        "strictFunctionTypes": true,
+        "module": "commonjs",
+        "target": "es2020",
         "esModuleInterop": true,
-        "skipLibCheck": true,
-        "noUnusedParameters": false
+        "allowSyntheticDefaultImports": true,
+        "incremental": true,
+        "noImplicitAny": false,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "outDir": "build",
+        "baseUrl": "src",
+        "paths": {
+            "config/*": [
+                "config/*"
+            ]
+        }
     },
     "include": [
-        "src"
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
     ]
 }

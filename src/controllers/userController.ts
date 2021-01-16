@@ -1,18 +1,15 @@
-import { IUserController } from '../interfaces'
+export const login = async (req, res) => {
+    try {
 
-export const userController: IUserController = {
-    async login(request, response): Promise<any> {
-        try {
-            console.log('login')
-        } catch (err) {
-            console.log(err)
-        }
-    },
-    async signUp(request, reponse): Promise<any> {
-        try {
-            console.log('signup')
-        } catch (err) {
-            console.log(err)
-        }   
+    } catch (err) {
+
+    }
+}
+
+export const signUp = async (req, res) => {
+    try {
+
+    } catch (err) {
+
     }
 }
