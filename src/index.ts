@@ -18,6 +18,7 @@ export const createServer = async () => {
     server.register(require('fastify-cors'))
     server.register(require('fastify-file-upload'))
     server.register(require('fastify-helmet'))
+    server.register(require('fastify-sensible'))
 
     await server.ready();
     return server;

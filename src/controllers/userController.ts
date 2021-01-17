@@ -15,6 +15,7 @@ export const login = async (req: IUserRequest, res: FastifyReply) => {
         const user = await prisma.user.findUnique({ where: { email: email } })
 
         if (!user) {
+            res
             console.error(ERRORS.userNotExists.message)
             return ERRORS.userNotExists;
         }

@@ -3,7 +3,7 @@ import fs from 'fs'
 import { awsConfig } from '../config'
 import { utils } from './utils'
 import { extname } from 'path'
-import { File } from '../interface/ifile';
+import { IFile } from '../interface/ifile';
 
 const s3 = new S3();
 
@@ -13,7 +13,7 @@ config.update({
     region: awsConfig.AWS_REGION
 })
 
-export const uploadFileToS3 = (file: File, path: string) => {
+export const uploadFileToS3 = (file: IFile, path: string) => {
     return new Promise((resolve, reject) => {
         try {
             const extension = extname(file.originalFilename);

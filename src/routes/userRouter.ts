@@ -1,9 +1,9 @@
 import { FastifyInstance } from 'fastify';
-import { UserController } from 'interface';
+import { IUserController } from 'interface';
 import { userControllers } from '../controllers';
 
 export async function userRouter(fastify: FastifyInstance, opts, next) {
-    let controllers: UserController = userControllers;
+    let controllers: IUserController = userControllers;
 
     fastify.post('/user/login', controllers.login)
 

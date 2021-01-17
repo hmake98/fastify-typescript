@@ -1,7 +1,9 @@
-import { File } from './ifile'
-import { UserController } from './icontrollers'
+import { IFile } from './ifile'
+import { IUserController } from './icontrollers'
+import { IUserRequest } from './iuser'
 
 export {
-    File,
-    UserController,
+    IFile,
+    IUserController,
+    IUserRequest
 }
