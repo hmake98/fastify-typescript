@@ -41,7 +41,6 @@
     "fastify-multipart": "^3.3.1",
     "fastify-now": "^2.3.0",
     "fastify-plugin": "^3.0.0",
-    "fastify-sensible": "^3.1.0",
     "fluent-json-schema": "^2.0.3",
     "http-errors": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
