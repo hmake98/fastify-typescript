@@ -34,9 +34,9 @@ export const startServer = async () => {
     await server.listen(process.env.API_PORT, process.env.API_HOST);
 
     prisma.$connect().then(() => {
-        console.log('Database connected')
+        server.log.info('Database connected')
     }).catch((err) => {
-        console.error('Database connection failed!')
+        server.log.error('Database connection failed!')
         console.log(err)
     })
 
