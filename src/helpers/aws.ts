@@ -1,9 +1,9 @@
-import { S3, config } from 'aws-sdk'
 import fs from 'fs'
+import { S3, config } from 'aws-sdk'
 import { awsConfig } from '../config'
 import { utils } from './utils'
 import { extname } from 'path'
-import { IFile } from '../interface/ifile';
+import { IFile } from '../interfaces/ifile';
 
 const s3 = new S3();
 

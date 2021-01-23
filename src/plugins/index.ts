@@ -1,0 +1,1 @@
+// declare plugins here and register this file into index.ts to use 

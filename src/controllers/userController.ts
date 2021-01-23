@@ -1,7 +1,7 @@
-import fastify, { FastifyReply } from 'fastify';
-import { IUserRequest } from '../interface/iuser';
+import { FastifyReply } from 'fastify';
+import { IUserRequest } from '../interfaces/iuser';
 import { prisma } from '../index';
-import { ERRORS } from '../helpers/errors';
+import { ERRORS } from '../helpers/constants';
 import * as JWT from 'jsonwebtoken'
 import { utils } from '../helpers/utils';
 

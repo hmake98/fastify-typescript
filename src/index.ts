@@ -12,8 +12,11 @@ export const createServer = async () => {
         logger: { level: process.env.LOG_LEVEL },
     });
 
+    // custom middleware, routes, hooks
+    // check user router for how to use middleware function into api request
     server.register(require('./routes/index'))
 
+    // third party packages
     server.register(require('fastify-formbody'))
     server.register(require('fastify-cors'))
     server.register(require('fastify-file-upload'))
