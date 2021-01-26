@@ -1,7 +1,5 @@
-import fastify from 'fastify';
-import { PrismaClient } from '@prisma/client';
-
-export const prisma = new PrismaClient();
+import fastify from 'fastify'
+import mongoose from 'mongoose'
 
 // Load env vars
 import loadConfig from './config';
@@ -36,11 +34,16 @@ export const startServer = async () => {
 
     await server.listen(process.env.API_PORT, process.env.API_HOST);
 
-    prisma.$connect().then(() => {
-        server.log.info('Database connected')
+
+    mongoose.set('debug', false)
+    mongoose.connect(process.env.MONGO_URL, {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true
+    }).then(() => {
+        server.log.info('Mongodb server connected!')
     }).catch((err) => {
-        server.log.error('Database connection failed!')
-        console.log(err)
+        server.log.error(err)
     })
 
     if (process.env.NODE_ENV === 'production') {

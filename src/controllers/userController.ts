@@ -1,9 +1,9 @@
 import { FastifyReply } from 'fastify';
 import { IUserRequest } from '../interfaces/iuser';
-import { prisma } from '../index';
 import { ERRORS } from '../helpers/constants';
 import * as JWT from 'jsonwebtoken'
 import { utils } from '../helpers/utils';
+import User from './../models/User';
 
 export const login = async (req: IUserRequest, res: FastifyReply) => {
     try {
@@ -12,7 +12,7 @@ export const login = async (req: IUserRequest, res: FastifyReply) => {
             password,
         } = req.body
 
-        const user = await prisma.user.findUnique({ where: { email: email } })
+        const user = await User.findOne({ email })
 
         if (!user) {
             res
@@ -49,7 +49,7 @@ export const signUp = async (req: IUserRequest, res: FastifyReply) => {
             lastName
         } = req.body
 
-        const user = await prisma.user.findUnique({ where: { email: email } })
+        const user = await User.findOne({ email })
 
         if (user) {
             console.error(ERRORS.userExists.message)
@@ -57,15 +57,12 @@ export const signUp = async (req: IUserRequest, res: FastifyReply) => {
         }
 
         const hashPass = await utils.genSalt(10, password)
-        console.log(hashPass)
 
-        const createUser = await prisma.user.create({
-            data: {
-                email,
-                firstName,
-                lastName,
-                password: String(hashPass),
-            }
+        const createUser = await User.create({
+            email,
+            firstName,
+            lastName,
+            password: String(hashPass),
         })
 
         const token = JWT.sign({
@@ -74,6 +71,7 @@ export const signUp = async (req: IUserRequest, res: FastifyReply) => {
         }, process.env.APP_JWT_SECRET);
 
         delete createUser.password
+
         return {
             token,
             user: createUser

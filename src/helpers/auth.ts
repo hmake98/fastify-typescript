@@ -1,5 +1,5 @@
 import * as JWT from 'jsonwebtoken'
-import { prisma } from '../index'
+import User from '../models/User'
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { ERROR400, ERROR401, ERROR500 } from '../helpers/errors';
 import { IUserRequest } from 'interfaces/iuser';
@@ -35,7 +35,7 @@ export const checkValidUser = async (req: IUserRequest, res: FastifyReply, next)
             return res.send(ERROR401)
         }
 
-        const userData = await prisma.user.findUnique({ where: { id: user.id } })
+        const userData = await User.findById(user._id)
         if (!userData) {
             return res.send(ERROR401)
         }

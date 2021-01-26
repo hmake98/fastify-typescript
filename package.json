@@ -7,11 +7,7 @@
     "build": "tsc",
     "start": "node build/index.js | pino-pretty --colorize",
     "dev": "nodemon | pino-pretty --colorize",
-    "postinstall": "npx typesync",
-    "prisma": "npx prisma",
-    "prisma:gen": "npx prisma generate",
-    "prisma:dep": "npx prisma migrate deploy --preview-feature",
-    "prisma:save": "npx prisma db push --preview-feature"
+    "postinstall": "npx typesync"
   },
   "repository": {
     "type": "git",
@@ -25,7 +21,6 @@
   },
   "homepage": "https://github.com/hmake98/fastify-typescript#readme",
   "dependencies": {
-    "@prisma/client": "^2.14.0",
     "aws-sdk": "^2.828.0",
     "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
@@ -44,10 +39,10 @@
     "fluent-json-schema": "^2.0.3",
     "http-errors": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.13",
     "pino": "^6.11.0"
   },
   "devDependencies": {
-    "@prisma/cli": "^2.14.0",
     "@types/bcrypt": "^10.0.28-alpha",
     "@types/eslint": "^7.2.6",
     "@types/eslint-plugin-prettier": "^3.1.0",
