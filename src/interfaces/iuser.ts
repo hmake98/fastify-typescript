@@ -1,8 +1,8 @@
+import { User } from '../models/User';
 import { FastifyRequest } from 'fastify';
-import { Prisma, User } from '@prisma/client';
 
 export interface IUserRequest extends FastifyRequest {
-    body: Prisma.UserCreateInput
+    body: User
     authUser: User
 }
 

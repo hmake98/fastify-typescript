@@ -12,7 +12,7 @@ export const createServer = async () => {
 
     // custom middleware, routes, hooks
     // check user router for how to use middleware function into api request
-    server.register(require('./routes/index'))
+    server.register(require('./routes/userRouter'))
 
     // third party packages
     server.register(require('fastify-formbody'))

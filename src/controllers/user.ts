@@ -3,7 +3,7 @@ import { IUserRequest } from '../interfaces/iuser';
 import { ERRORS } from '../helpers/constants';
 import * as JWT from 'jsonwebtoken'
 import { utils } from '../helpers/utils';
-import User from './../models/User';
+import User from '../models/User';
 
 export const login = async (req: IUserRequest, res: FastifyReply) => {
     try {
