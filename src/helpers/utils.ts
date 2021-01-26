@@ -23,11 +23,11 @@ export const utils = {
         })
     },
     compareHash: (hash, value) => {
-        let response: boolean
-        bcrypt.compare(value, hash, (err, result): boolean | any => {
-            if (err) return err
-            response = result
+        return new Promise((resolve, reject) => {
+            bcrypt.compare(value, hash, (err, result): boolean | any => {
+                if (err) reject(err)
+                resolve(result)
+            })
         })
-        return response
     }
 }

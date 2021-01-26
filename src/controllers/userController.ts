@@ -20,7 +20,9 @@ export const login = async (req: IUserRequest, res: FastifyReply) => {
             return ERRORS.userNotExists;
         }
 
-        if (!utils.compareHash(password, user.password)) {
+        const checkPass = await utils.compareHash(password, user.password)
+
+        if (!checkPass) {
             console.error(ERRORS.userCredError.message)
             return ERRORS.userCredError;
         }
