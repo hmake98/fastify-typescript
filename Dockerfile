@@ -13,6 +13,4 @@ COPY . .
 RUN npm run build \
   && apk del .build-deps
 
-EXPOSE 4002
-
 CMD [ "npm",  "start" ]

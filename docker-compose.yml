@@ -1,1 +1,14 @@
-
+version: "3"
+services:
+  api:
+    container_name: fastify-typescript
+    ports:
+      - "5000:5000"
+    build:
+      dockerfile: Dockerfile
+      context: .
+    env_file:
+      - development.env
+    volumes:
+      - /app/node_modules
+      - ./:/app
