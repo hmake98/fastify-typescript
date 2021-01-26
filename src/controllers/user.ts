@@ -15,7 +15,6 @@ export const login = async (req: IUserRequest, res: FastifyReply) => {
         const user = await prisma.user.findUnique({ where: { email: email } })
 
         if (!user) {
-            res
             console.error(ERRORS.userNotExists.message)
             return ERRORS.userNotExists;
         }
@@ -59,7 +58,6 @@ export const signUp = async (req: IUserRequest, res: FastifyReply) => {
         }
 
         const hashPass = await utils.genSalt(10, password)
-        console.log(hashPass)
 
         const createUser = await prisma.user.create({
             data: {

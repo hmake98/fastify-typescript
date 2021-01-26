@@ -10,7 +10,7 @@ RUN npm install --frozen-lockfile
 
 COPY . .
 
-RUN npm build \
+RUN npm run build \
   && apk del .build-deps
 
 EXPOSE 4002
