@@ -15,7 +15,7 @@ export const createServer = async () => {
     // custom middleware, routes, hooks
     // check user router for how to use middleware function into api request
     // routers
-    server.register(require('./routes/userRouter'))
+    server.register(require('./routes/userRouter'), { prefix: '/api'})
 
     // third party packages
     server.register(require('fastify-formbody'))
@@ -41,7 +41,7 @@ export const startServer = async () => {
         server.log.info('Database connected')
     }).catch((err) => {
         server.log.error('Database connection failed!')
-        console.log(err)
+        server.log.error(err)
     })
 
     if (process.env.NODE_ENV === 'production') {

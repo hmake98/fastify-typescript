@@ -2,7 +2,7 @@ import * as JWT from 'jsonwebtoken'
 import { prisma } from '../index'
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { ERROR400, ERROR401, ERROR500 } from '../helpers/errors';
-import { IUserRequest } from 'interfaces/iuser';
+import { IUserRequest } from 'interfaces';
 
 export const checkValidRequest = async (req: FastifyRequest, res: FastifyReply, next) => {
     try {

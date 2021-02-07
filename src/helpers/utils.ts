@@ -29,5 +29,5 @@ export const utils = {
                 resolve(result)
             })
         })
-    }
+    },
 }

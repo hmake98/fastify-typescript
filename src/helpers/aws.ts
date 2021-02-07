@@ -3,7 +3,7 @@ import { S3, config } from 'aws-sdk'
 import { awsConfig } from '../config'
 import { utils } from './utils'
 import { extname } from 'path'
-import { IFile } from '../interfaces/ifile';
+import { IFile } from '../interfaces';
 
 const s3 = new S3();
 
