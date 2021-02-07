@@ -4,7 +4,8 @@ import { prisma } from '../index';
 import { ERRORS } from '../helpers/constants';
 import * as JWT from 'jsonwebtoken'
 import { utils } from '../helpers/utils';
-import { reset } from 'nodemon';
+import { STANDARD } from '../helpers/response';
+import { ERROR500 } from '../helpers/response';
 
 export const login = async (request: IUserRequest, reply: FastifyReply) => {
     try {
@@ -16,15 +17,17 @@ export const login = async (request: IUserRequest, reply: FastifyReply) => {
         const user = await prisma.user.findUnique({ where: { email: email } })
 
         if (!user) {
-            console.error(ERRORS.userNotExists.message)
-            return ERRORS.userNotExists;
+            reply
+                .code(ERROR500.CODE)
+                .send(ERRORS.userNotExists)
         }
 
         const checkPass = await utils.compareHash(password, user.password)
 
         if (!checkPass) {
-            console.error(ERRORS.userCredError.message)
-            return ERRORS.userCredError;
+            reply
+                .code(ERROR500.CODE)
+                .send(ERRORS.userCredError)
         }
 
         const token = JWT.sign({
@@ -32,13 +35,14 @@ export const login = async (request: IUserRequest, reply: FastifyReply) => {
             email: user.email
         }, process.env.APP_JWT_SECRET);
 
-        reply.code(200).send({
+        reply.code(STANDARD.SUCCESS).send({
             token,
             user
         })
     } catch (err) {
-        console.log(err)
-        return new Error(err)
+        reply
+            .code(ERROR500.CODE)
+            .send(new Error(err))
     }
 }
 
@@ -54,8 +58,9 @@ export const signUp = async (request: IUserRequest, reply: FastifyReply) => {
         const user = await prisma.user.findUnique({ where: { email: email } })
 
         if (user) {
-            console.error(ERRORS.userExists.message)
-            return ERRORS.userExists;
+            reply
+                .code(ERROR500.CODE)
+                .send(ERRORS.userExists)
         }
 
         const hashPass = await utils.genSalt(10, password)
@@ -76,19 +81,28 @@ export const signUp = async (request: IUserRequest, reply: FastifyReply) => {
 
         delete createUser.password
 
-        reply.code(200).send({
+        reply.code(STANDARD.SUCCESS).send({
             token,
             user: createUser
         })
     } catch (err) {
-        console.log(err)
-        return new Error(err)
+        reply
+            .code(ERROR500.CODE)
+            .send(new Error(err))
     }
 }
 
 export const getAllUsers = async (request: IUserRequest, reply: FastifyReply) => {
-    const data = await prisma.user.findMany({});
-    reply.code(200).send({
-        data
-    })
+    try {
+        console.log('in get all users', request.authUser)
+        const data = await prisma.user.findMany({});
+
+        reply.code(STANDARD.SUCCESS).send({
+            data
+        })
+    } catch (err) {
+        reply
+            .code(ERROR500.CODE)
+            .send(new Error(err))
+    }
 }

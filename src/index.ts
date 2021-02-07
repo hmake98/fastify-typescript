@@ -14,25 +14,22 @@ export const createServer = async () => {
 
     // custom middleware, routes, hooks
     // check user router for how to use middleware function into api request
-    // routers
-    server.register(require('./routes/userRouter'), { prefix: '/api'})
 
     // third party packages
     server.register(require('fastify-formbody'))
     server.register(require('fastify-cors'))
     server.register(require('fastify-file-upload'))
     server.register(require('fastify-helmet'))
+    server.register(require('fastify-auth'))
+
+    // API routers
+    server.register(require('./routes/userRouter'), { prefix: '/api' })
 
     await server.ready();
     return server;
 }
 
 export const startServer = async () => {
-    process.on('unhandledRejection', (err) => {
-        console.error(err);
-        process.exit(1);
-    });
-
     const server = await createServer();
 
     await server.listen(process.env.API_PORT, process.env.API_HOST);
@@ -54,6 +51,11 @@ export const startServer = async () => {
             );
         }
     }
+
+    process.on('unhandledRejection', (err) => {
+        console.error(err);
+        process.exit(1);
+    });
 }
 
 if (process.env.NODE_ENV !== 'test') {
