@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcryptjs'
 
 export const utils = {
     isJSON: (data: string) => {
@@ -16,7 +16,8 @@ export const utils = {
     },
     genSalt: (saltRounds, value) => {
         return new Promise((resolve, reject) => {
-            bcrypt.hash(value, saltRounds, (err, hash) => {
+            var salt = bcrypt.genSaltSync(saltRounds);
+            bcrypt.hash(value, salt, (err, hash) => {
                 if (err) reject(err)
                 resolve(hash)
             })

@@ -12,3 +12,4 @@ services:
     volumes:
       - /app/node_modules
       - ./:/app
+    network_mode: "host"
