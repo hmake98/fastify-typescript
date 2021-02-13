@@ -1,4 +1,4 @@
-import { FastifyReply } from 'fastify';
+import { FastifyReply, FastifyRequest } from 'fastify';
 import { IUserRequest } from '../interfaces';
 import { prisma } from '../index';
 import { ERRORS } from '../helpers/constants';
@@ -94,7 +94,8 @@ export const signUp = async (request: IUserRequest, reply: FastifyReply) => {
 
 export const getAllUsers = async (request: IUserRequest, reply: FastifyReply) => {
     try {
-        console.log('in get all users', request.authUser)
+        console.log('auth user', request.authUser)
+
         const data = await prisma.user.findMany({});
 
         reply.code(STANDARD.SUCCESS).send({

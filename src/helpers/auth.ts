@@ -1,8 +1,8 @@
-import * as JWT from 'jsonwebtoken'
-import { prisma } from '../index'
 import { FastifyRequest, FastifyReply } from 'fastify';
+import { prisma } from '../index'
 import { ERROR400, ERROR401, ERROR500 } from './response';
 import { IUserRequest } from 'interfaces';
+import * as JWT from 'jsonwebtoken'
 
 export const checkValidRequest = async (request: FastifyRequest, reply: FastifyReply, next) => {
     try {
@@ -33,7 +33,7 @@ export const checkValidRequest = async (request: FastifyRequest, reply: FastifyR
 export const checkValidUser = async (request: IUserRequest, reply: FastifyReply, next) => {
     try {
         let token = request.headers.authorization;
-        token = token.replace('Bearer ', '');        
+        token = token.replace('Bearer ', '');
 
         if (!token) {
             return reply
@@ -50,7 +50,6 @@ export const checkValidUser = async (request: IUserRequest, reply: FastifyReply,
         }
 
         const userData = await prisma.user.findUnique({ where: { id: user.id } })
-        console.log(userData);
 
         if (!userData) {
             return reply

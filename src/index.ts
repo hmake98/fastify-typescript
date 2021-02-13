@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 export const prisma = new PrismaClient();
 
 // Load env vars
-import loadConfig from './config';
+import loadConfig from './config/config';
 loadConfig();
 
 export const createServer = async () => {
@@ -20,7 +20,7 @@ export const createServer = async () => {
     server.register(require('fastify-cors'))
     server.register(require('fastify-file-upload'))
     server.register(require('fastify-helmet'))
-    server.register(require('fastify-auth'))
+
 
     // API routers
     server.register(require('./routes/userRouter'), { prefix: '/api' })

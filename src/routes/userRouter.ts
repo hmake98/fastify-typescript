@@ -1,21 +1,31 @@
 import { FastifyInstance } from 'fastify';
-import { checkValidRequest, checkValidUser } from '../helpers/auth';
 import * as controllers from '../controllers';
-import * as auth from 'fastify-auth'
+import { checkValidRequest, checkValidUser } from '../helpers/auth';
 
 async function userRouter(fastify: FastifyInstance) {
-    fastify.post('/user/login', { preHandler: [] }, controllers.login)
+    fastify.decorateRequest('authUser', '')
 
-    fastify.post('/user/signup', { preHandler: [] }, controllers.signUp)
+    fastify.route({
+        method: 'GET',
+        url: '/user',
+        onRequest: [
+            checkValidRequest,
+            checkValidUser
+        ],
+        handler: controllers.getAllUsers
+    })
 
-    fastify.get('/user', {
-        preHandler:
-            fastify.auth([
-                checkValidRequest,
-                checkValidUser
-            ], { relation: 'and', run: 'all' })
-    },
-        controllers.getAllUsers)
+    fastify.route({
+        method: 'POST',
+        url: '/user/login',
+        handler: controllers.login
+    })
+
+    fastify.route({
+        method: 'POST',
+        url: '/user/signup',
+        handler: controllers.signUp
+    })
 }
 
 export default userRouter

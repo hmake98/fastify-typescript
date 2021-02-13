@@ -1,17 +1,15 @@
 import fs from 'fs'
-import { S3, config } from 'aws-sdk'
-import { awsConfig } from '../config'
+import { S3 } from 'aws-sdk'
+import { awsConfig } from '../config/config'
 import { utils } from './utils'
 import { extname } from 'path'
 import { IFile } from '../interfaces';
 
-const s3 = new S3();
-
-config.update({
+const s3 = new S3({
     accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
     secretAccessKey: awsConfig.AWS_SECRET_KEY,
     region: awsConfig.AWS_REGION
-})
+});
 
 export const uploadFileToS3 = (file: IFile, path: string) => {
     return new Promise((resolve, reject) => {

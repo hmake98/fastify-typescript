@@ -1,6 +1,7 @@
 
-import { FastifyRequest } from 'fastify';
+import { FastifyRequest, FastifyInstance, preHandlerHookHandler } from 'fastify';
 import { Prisma, User } from '@prisma/client';
+import { FastifyAuthFunction } from 'fastify-auth';
 
 export interface IFile {
     originalFilename: string;
