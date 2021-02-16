@@ -4,7 +4,7 @@ import { ERROR400, ERROR401, ERROR500 } from './response';
 import { IUserRequest } from 'interfaces';
 import * as JWT from 'jsonwebtoken'
 
-export const checkValidRequest = async (request: FastifyRequest, reply: FastifyReply, next) => {
+export const checkValidRequest = (request: FastifyRequest, reply: FastifyReply, done) => {
     try {
         let token = request.headers.authorization
         token = token.replace('Bearer ', '');
@@ -16,7 +16,7 @@ export const checkValidRequest = async (request: FastifyRequest, reply: FastifyR
                         .code(ERROR401.CODE)
                         .send(ERROR401)
                 }
-                next()
+                done()
             })
         } else {
             return reply
@@ -30,7 +30,7 @@ export const checkValidRequest = async (request: FastifyRequest, reply: FastifyR
     }
 }
 
-export const checkValidUser = async (request: IUserRequest, reply: FastifyReply, next) => {
+export const checkValidUser = async (request: IUserRequest, reply: FastifyReply, done) => {
     try {
         let token = request.headers.authorization;
         token = token.replace('Bearer ', '');
@@ -59,7 +59,6 @@ export const checkValidUser = async (request: IUserRequest, reply: FastifyReply,
 
         request.authUser = userData
 
-        next();
     } catch (err) {
         return reply
             .code(ERROR500.CODE)

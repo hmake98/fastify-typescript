@@ -3,7 +3,7 @@
 import { FastifyInstance } from 'fastify';
 
 async function mainHooks(fastify: FastifyInstance) {
-    fastify.addHook('onRequest', async (request, reply, done) => {
+    fastify.addHook('onRequest', (request, reply, done) => {
         console.log('On request', request.body)
         done();
     })

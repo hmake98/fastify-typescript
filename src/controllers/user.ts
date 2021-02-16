@@ -1,4 +1,4 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
+import { FastifyReply } from 'fastify';
 import { IUserRequest } from '../interfaces';
 import { prisma } from '../index';
 import { ERRORS } from '../helpers/constants';

@@ -1,5 +1,6 @@
 import fastify from 'fastify';
 import { PrismaClient } from '@prisma/client';
+import mainHooks from './plugins/hooks'
 
 export const prisma = new PrismaClient();
 
@@ -23,6 +24,7 @@ export const createServer = async () => {
 
 
     // API routers
+    // server.register(mainHooks)
     server.register(require('./routes/userRouter'), { prefix: '/api' })
 
     await server.ready();

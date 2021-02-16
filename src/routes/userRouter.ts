@@ -8,7 +8,7 @@ async function userRouter(fastify: FastifyInstance) {
     fastify.route({
         method: 'GET',
         url: '/user',
-        onRequest: [
+        preHandler: [
             checkValidRequest,
             checkValidUser
         ],
