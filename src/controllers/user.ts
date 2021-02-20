@@ -94,8 +94,6 @@ export const signUp = async (request: IUserRequest, reply: FastifyReply) => {
 
 export const getAllUsers = async (request: IUserRequest, reply: FastifyReply) => {
     try {
-        console.log('auth user', request.authUser)
-
         const data = await prisma.user.findMany({});
 
         reply.code(STANDARD.SUCCESS).send({

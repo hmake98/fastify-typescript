@@ -1,6 +1,7 @@
 import fastify from 'fastify';
 import { PrismaClient } from '@prisma/client';
 import mainHooks from './plugins/hooks'
+import userRouter from './routes/user'
 
 export const prisma = new PrismaClient();
 
@@ -22,10 +23,9 @@ export const createServer = async () => {
     server.register(require('fastify-file-upload'))
     server.register(require('fastify-helmet'))
 
-
     // API routers
-    // server.register(mainHooks)
-    server.register(require('./routes/userRouter'), { prefix: '/api' })
+    server.register(mainHooks)
+    server.register(userRouter, { prefix: '/api' })
 
     await server.ready();
     return server;
