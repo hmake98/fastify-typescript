@@ -59,3 +59,4 @@ profile*
 
 build/
 .env
+.husky

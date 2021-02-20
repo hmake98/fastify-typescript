@@ -12,7 +12,7 @@
     "prisma:gen": "npx prisma generate",
     "prisma:dep": "npx prisma migrate deploy --preview-feature",
     "prisma:save": "npx prisma db push --preview-feature",
-    "lerna:lint:ts": "lerna run lint:ts:fix"
+    "lint": "./node_modules/.bin/eslint"
   },
   "repository": {
     "type": "git",
@@ -64,6 +64,7 @@
     "@typescript-eslint/parser": "^3.10.1",
     "cross-env": "^7.0.0",
     "eslint": "^7.14.0",
+    "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
     "husky": "^5.0.9",
@@ -78,12 +79,36 @@
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "all"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "prettier",
+      "prettier/@typescript-eslint"
+    ],
+    "env": {
+      "node": true
+    }
+  },
   "lint-staged": {
-    "*.{ts,js,json,md}": "prettier --write"
+    "*.{js,ts,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run build"
     }
   }
 }

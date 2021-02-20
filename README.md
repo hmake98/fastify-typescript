@@ -45,3 +45,4 @@ npm run build
 
 ## Prisma documentation
 - Check out the [Prisma docs](https://www.prisma.io/docs/)
+- Check out the [Fastify docs](https://www.fastify.io/docs/latest/)
