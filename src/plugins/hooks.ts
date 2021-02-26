@@ -2,8 +2,11 @@
 
 import { FastifyInstance } from 'fastify';
 
-async function mainHooks(fastify: FastifyInstance) {
-
+async function Hooks(fastify: FastifyInstance) {
+    fastify.addHook('preHandler', (request, reply, next) => {
+        console.log(request.body)
+        next()
+    })
 }
 
-export default mainHooks
+export default Hooks
