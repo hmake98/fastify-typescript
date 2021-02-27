@@ -4,7 +4,7 @@ import { prisma } from '../index';
 import { ERRORS } from '../helpers/constants';
 import * as JWT from 'jsonwebtoken'
 import { utils } from '../helpers/utils';
-import { STANDARD } from '../helpers/response';
+import { ERROR400, STANDARD } from '../helpers/response';
 import { ERROR500 } from '../helpers/response';
 
 export const login = async (request: IUserRequest, reply: FastifyReply) => {
@@ -18,7 +18,7 @@ export const login = async (request: IUserRequest, reply: FastifyReply) => {
 
         if (!user) {
             reply
-                .code(ERROR500.CODE)
+                .code(ERROR400.CODE)
                 .send(ERRORS.userNotExists)
         }
 
@@ -26,7 +26,7 @@ export const login = async (request: IUserRequest, reply: FastifyReply) => {
 
         if (!checkPass) {
             reply
-                .code(ERROR500.CODE)
+                .code(ERROR400.CODE)
                 .send(ERRORS.userCredError)
         }
 
@@ -59,7 +59,7 @@ export const signUp = async (request: IUserRequest, reply: FastifyReply) => {
 
         if (user) {
             reply
-                .code(ERROR500.CODE)
+                .code(ERROR400.CODE)
                 .send(ERRORS.userExists)
         }
 
