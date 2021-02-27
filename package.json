@@ -41,7 +41,7 @@
     "fastify-formbody": "^5.0.0",
     "fastify-helmet": "^5.1.0",
     "fastify-jwt": "^2.3.0",
-    "fastify-multipart": "^3.3.1",
+    "fastify-multipart": "^4.0.0",
     "fastify-now": "^2.3.0",
     "fastify-plugin": "^3.0.0",
     "fluent-json-schema": "^2.0.3",
