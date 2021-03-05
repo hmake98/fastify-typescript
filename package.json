@@ -31,7 +31,7 @@
     "aws-sdk": "^2.828.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
-    "env-schema": "^2.0.1",
+    "env-schema": "^3.0.0",
     "fastify": "^3.10.1",
     "fastify-auth": "^1.0.1",
     "fastify-autoload": "^3.0.2",
