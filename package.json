@@ -72,7 +72,7 @@
     "lint-staged": "10.5.4",
     "nodemon": "2.0.7",
     "nyc": "15.1.0",
-    "pino-pretty": "4.3.0",
+    "pino-pretty": "4.7.1",
     "prettier": "2.2.1",
     "prisma": "2.17.0",
     "tap": "14.11.0",
