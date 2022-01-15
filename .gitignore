@@ -60,3 +60,7 @@ profile*
 build/
 .env
 .husky
+
+.development.env
+.stage.env
+.production.env
