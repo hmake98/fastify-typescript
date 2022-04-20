@@ -3,13 +3,32 @@ services:
   api:
     container_name: fastify-typescript
     ports:
-      - "5000:5000"
+      - 5000:5000
     build:
       dockerfile: Dockerfile
       context: .
     env_file:
-      - development.env
+      - .env
     volumes:
       - /app/node_modules
       - ./:/app
-    network_mode: "host"
+    networks:
+      - backend
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=master123
+    ports:
+      - 5432:5432
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge
+volumes:
+  db:
+    driver: local

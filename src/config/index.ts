@@ -1,7 +1,6 @@
 import path from 'path'
 import envSchema from 'env-schema'
 import S from 'fluent-json-schema'
-import { S3 } from 'aws-sdk'
 
 export const awsConfig = {
   AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
@@ -9,20 +8,12 @@ export const awsConfig = {
   AWS_REGION: process.env.AWS_REGION,
 }
 
-export const s3 = new S3({
-  accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
-  secretAccessKey: awsConfig.AWS_SECRET_KEY,
-  region: awsConfig.AWS_REGION,
-})
+export const awsBucketName = process.env.AWS_BUCKET_NAME;
+export const linkExpireTime = process.env.AWS_LINK_EXPIRE;
 
 export default function loadConfig(): void {
   const result = require('dotenv').config({
-    path: path.join(
-      __dirname,
-      `../../${
-        process.env.NODE_ENV ? `.${process.env.NODE_ENV}` : '.development'
-      }.env`,
-    ),
+    path: path.join(__dirname, '..', '..', '.env'),
   })
 
   if (result.error) {

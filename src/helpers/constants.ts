@@ -6,7 +6,7 @@ export const STANDARD = {
 
 export const ERROR404 = {
   statusCode: 404,
-  message: 'PAGE_NOT_FOUND',
+  message: 'NOT_FOUND',
 }
 
 export const ERROR403 = {
@@ -23,8 +23,6 @@ export const ERROR500 = {
   statusCode: 500,
   message: 'TRY_AGAIN',
 }
-
-export const ERROR422 = 422
 
 export const ERROR409 = {
   statusCode: 409,

@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { prisma } from '../index'
-import { ERROR400, ERROR401, ERROR500 } from './constants'
+import { prisma } from '../helpers/utils'
+import { ERROR400, ERROR401 } from './constants'
 import { IUserRequest } from 'interfaces'
 import * as JWT from 'jsonwebtoken'
 
@@ -12,11 +12,10 @@ export const checkValidRequest = (
   try {
     let token = request.headers.authorization
     token = token.replace('Bearer ', '')
-
     if (token) {
       JWT.verify(token, process.env.APP_JWT_SECRET, (err, decoded) => {
         if (err) {
-          return reply.code(ERROR401.statusCode).send(ERROR401)
+          return reply.code(ERROR400.statusCode).send(ERROR400)
         }
         done()
       })
@@ -52,8 +51,8 @@ export const checkValidUser = async (
     if (!userData) {
       return reply.code(ERROR401.statusCode).send(ERROR401)
     }
-
     request.authUser = userData
+    done();
   } catch (e) {
     return reply.code(ERROR401.statusCode).send(e)
   }

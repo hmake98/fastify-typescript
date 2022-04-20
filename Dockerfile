@@ -1,8 +1,8 @@
-FROM node:12-alpine
+FROM node:14-alpine
 
 WORKDIR /app
 
-RUN apk add --no-cache --virtual .build-deps alpine-sdk python
+RUN apk add --no-cache --virtual python
 
 COPY package.json package-lock.json ./
 
@@ -10,7 +10,4 @@ RUN npm install --frozen-lockfile
 
 COPY . .
 
-RUN npm run build \
-  && apk del .build-deps
-
-CMD [ "npm",  "start" ]
+CMD npm run dev

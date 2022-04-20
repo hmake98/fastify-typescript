@@ -1,36 +1,26 @@
-import fs from 'fs'
-import { s3 } from '../config/config'
-import { utils } from './utils'
-import { extname } from 'path'
-import { IFile } from '../interfaces'
+import { IGetPresign, IPutPresign } from '../interfaces'
+import { S3 } from 'aws-sdk'
+import { awsBucketName, awsConfig, linkExpireTime } from 'config'
 
-export const uploadFileToS3 = (file: IFile, path: string) => {
-  return new Promise((resolve, reject) => {
-    try {
-      const extension = extname(file.originalFilename)
-      const newFilename = `${utils.getTime()}${extension}`
-      const newPath = path + newFilename
-      const myBucket = process.env.BUCKET_NAME
-      fs.readFile(file.path, (err, data) => {
-        if (err) {
-          reject(err)
-        }
-        const params = {
-          Bucket: myBucket,
-          Key: newPath,
-          Body: data,
-          ACL: 'public-read',
-          ContentType: file.type,
-        }
-        s3.putObject(params, (error, result) => {
-          if (error) {
-            reject(error)
-          }
-          resolve(result)
-        })
-      })
-    } catch (e) {
-      reject(e)
-    }
+const s3 = new S3({
+  accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
+  secretAccessKey: awsConfig.AWS_SECRET_KEY,
+  region: awsConfig.AWS_REGION,
+})
+
+export const getPresginUrl = async (data: IGetPresign) => {
+  return await s3.getSignedUrlPromise('getObject', {
+    Bucket: awsBucketName,
+    Key: data.fileName,
+    Expires: linkExpireTime,
+  })
+}
+
+export const putPresginUrl = async (data: IPutPresign) => {
+  const { userId, fileName } = data
+  return await s3.getSignedUrlPromise('putObject', {
+    Bucket: awsBucketName,
+    Key: `${Date.now()}_${userId}_${fileName}`,
+    Expires: linkExpireTime,
   })
 }

@@ -1,67 +1,57 @@
+import { utils } from './helpers/utils';
 import fastify from 'fastify'
-import { PrismaClient } from '@prisma/client'
-import Hooks from './plugins/hooks'
-import userRouter from './routes/user'
-export const prisma = new PrismaClient()
-
-// Load env vars
-import loadConfig from './config/config'
+import pino from 'pino';
+import userRouter from './routes/user.router'
+import postRouter from './routes/post.router';
+import loadConfig from './config'
 loadConfig()
 
-export const createServer = async () => {
-  const server = fastify({
-    logger: { level: process.env.LOG_LEVEL },
-  })
+const port = process.env.API_PORT || 5000;
 
-  // custom middleware, routes, hooks
-  // check user router for how to use middleware function into api request
-
-  // third party packages
-  server.register(require('fastify-formbody'))
-  server.register(require('fastify-cors'))
-  server.register(require('fastify-file-upload'))
-  server.register(require('fastify-helmet'))
-
-  // API routers
-  server.register(Hooks)
-  server.register(userRouter, { prefix: '/api/user' })
-
-  await server.ready()
-  return server
-}
-
-export const startServer = async () => {
-  const server = await createServer()
-
-  await server.listen(process.env.API_PORT, process.env.API_HOST)
-
-  prisma
-    .$connect()
-    .then(() => {
-      server.log.info('Database connected')
+const startServer = async () => {
+  try {
+    const server = fastify({
+      logger: pino({ level: 'info' }),
     })
-    .catch((err) => {
-      server.log.error('Database connection failed')
-      server.log.error(err)
+    server.register(require('fastify-formbody'))
+    server.register(require('fastify-cors'))
+    server.register(require('fastify-helmet'))
+    server.register(userRouter, { prefix: '/api/user' })
+    server.register(postRouter, { prefix: '/api/post' })
+    server.setErrorHandler((error, request, reply) => {
+      server.log.error(error);
     })
-
-  if (process.env.NODE_ENV === 'production') {
-    for (const signal of ['SIGINT', 'SIGTERM']) {
-      process.on(signal, () =>
-        server.close().then((err) => {
-          console.log(`close application on ${signal}`)
-          process.exit(err ? 1 : 0)
-        }),
-      )
+    server.get('/', (request, reply) => {
+      reply.send({ name: 'fastify-typescript' })
+    })
+    server.get('/health-check', async (request, reply) => {
+      try {
+        await utils.healthCheck()
+        reply.status(200).send()
+      } catch (e) {
+        reply.status(500).send()
+      }
+    })
+    if (process.env.NODE_ENV === 'production') {
+      for (const signal of ['SIGINT', 'SIGTERM']) {
+        process.on(signal, () =>
+          server.close().then((err) => {
+            console.log(`close application on ${signal}`)
+            process.exit(err ? 1 : 0)
+          }),
+        )
+      }
     }
+    await server.listen(port)
+  } catch (e) {
+    console.error(e)
   }
-
-  process.on('unhandledRejection', (err) => {
-    console.error(err)
-    process.exit(1)
-  })
 }
 
-if (process.env.NODE_ENV !== 'test') {
-  startServer()
-}
+process.on('unhandledRejection', (e) => {
+  console.error(e)
+  process.exit(1)
+})
+
+startServer()
+
