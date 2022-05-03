@@ -13,4 +13,4 @@ COPY . .
 RUN npm run build \
     && apk del .build-deps
 
-CMD [ "npm",  "start" ]
+CMD npm start
