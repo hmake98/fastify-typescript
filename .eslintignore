@@ -1,3 +1,7 @@
-coverage/*
-node_modules/*
-build/*
+node_modules
+dist
+build
+*.d.ts
+ci
+test
+jest.json

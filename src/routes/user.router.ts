@@ -1,23 +1,52 @@
-import { FastifyInstance } from 'fastify'
-import { loginSchema, signupSchema } from '../schema'
-import * as controllers from '../controllers'
+import { FastifyInstance } from 'fastify';
+import * as controllers from '../controllers';
+import { utils } from '../utils';
+import { loginSchema, signupSchema } from '../schemas/User';
 
 async function userRouter(fastify: FastifyInstance) {
-  fastify.decorateRequest('authUser', '')
+  fastify.post(
+    '/login',
+    {
+      schema: {
+        body: {
+          type: 'object',
+          required: ['email', 'password'],
+          properties: {
+            email: { type: 'string', format: 'email' },
+            password: { type: 'string', minLength: 8 },
+          },
+        },
+      },
+      config: {
+        description: 'User login endpoint',
+      },
+      preValidation: utils.preValidation(loginSchema),
+    },
+    controllers.login,
+  );
 
-  fastify.route({
-    method: 'POST',
-    url: '/login',
-    schema: loginSchema,
-    handler: controllers.login,
-  })
-
-  fastify.route({
-    method: 'POST',
-    url: '/signup',
-    schema: signupSchema,
-    handler: controllers.signUp,
-  })
+  fastify.post(
+    '/signup',
+    {
+      schema: {
+        body: {
+          type: 'object',
+          required: ['email', 'password'],
+          properties: {
+            email: { type: 'string', format: 'email' },
+            password: { type: 'string', minLength: 8 },
+            firstName: { type: 'string' },
+            lastName: { type: 'string' },
+          },
+        },
+      },
+      config: {
+        description: 'User signup endpoint',
+      },
+      preValidation: utils.preValidation(signupSchema),
+    },
+    controllers.signUp,
+  );
 }
 
-export default userRouter
+export default userRouter;

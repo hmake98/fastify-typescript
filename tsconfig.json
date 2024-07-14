@@ -1,28 +1,21 @@
 {
-    "compilerOptions": {
-        "lib": [
-            "es2020"
-        ],
-        "module": "commonjs",
-        "target": "es2020",
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "incremental": true,
-        "noImplicitAny": false,
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "outDir": "build",
-        "baseUrl": "src",
-        "paths": {
-            "config/*": [
-                "config/*"
-            ]
-        }
+  "compilerOptions": {
+    "lib": ["es2020"],
+    "module": "commonjs",
+    "target": "es2020",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "incremental": true,
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "config/*": ["config/*"]
     },
-    "include": [
-        "src/**/*.ts"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+    "types": ["node", "jest"]
+  },
+  "include": ["src", "test"],
+  "exclude": ["node_modules", "dist", "coverage"]
 }

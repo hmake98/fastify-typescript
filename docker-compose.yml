@@ -1,34 +1,48 @@
-version: "3"
 services:
-  api:
-    container_name: fastify-typescript
+  postgres:
+    image: postgres:latest
     ports:
-      - 5000:5000
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=master123
+      - POSTGRES_DB=postgres
+    volumes:
+      - pg_data:/var/lib/postgresql
+    networks:
+      - backend
+
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - redis_data:/data
+    networks:
+      - backend
+
+  api:
     build:
       dockerfile: Dockerfile
       context: .
-    env_file:
-      - .env
-    volumes:
-      - /app/node_modules
-      - ./:/app
-    networks:
-      - backend
-  db:
-    image: postgres:latest
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=master123
     ports:
-      - 5432:5432
+      - 5001:5001
+    env_file:
+      - .env.docker
     volumes:
-      - db:/var/lib/postgresql/data
+      - ./:/app
+      - /app/node_modules
     networks:
       - backend
+
 networks:
   backend:
     driver: bridge
+
 volumes:
-  db:
+  pg_data:
+    driver: local
+  redis_data:
     driver: local

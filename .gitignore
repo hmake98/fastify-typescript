@@ -58,6 +58,6 @@ profile*
 *flamegraph*
 
 build/
-.husky
 
 .env
+dist

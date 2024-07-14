@@ -1,0 +1,24 @@
+{
+  "testTimeout": 5000,
+  "rootDir": "../",
+  "modulePaths": ["."],
+  "testEnvironment": "node",
+  "testMatch": ["<rootDir>/test/**/*.spec.ts"],
+  "collectCoverage": true,
+  "coverageDirectory": "coverage",
+  "coverageReporters": ["lcov", "json-summary"],
+  "collectCoverageFrom": [],
+  "coverageThreshold": {
+    "global": {
+      "branches": 100,
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
+    }
+  },
+  "moduleFileExtensions": ["js", "ts", "json"],
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "modulePathIgnorePatterns": ["<rootDir>/dist"]
+}
