@@ -16,8 +16,13 @@ This uses [Postgres database](https://www.postgresql.org/).
 To set up your database, run:
 
 ```sh
-npm run prisma:save
-npm run prisma:dep
+npm run migrate
+```
+
+for production
+
+```sh
+npm run migrate:prod
 ```
 
 ### 3. Generate Prisma Client (type-safe database client)
@@ -25,7 +30,7 @@ npm run prisma:dep
 Run the following command to generate [Prisma Client](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/generating-prisma-client):
 
 ```sh
-npm run prisma:gen
+npm run db:gen
 ```
 
 ### 4. Start the Fastify server

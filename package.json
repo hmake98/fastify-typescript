@@ -10,7 +10,6 @@
     "start": "node dist/main.js",
     "dev": "ts-node-dev ./src/main.ts | pino-pretty --colorize",
     "postinstall": "prisma generate",
-    "generate-types": "ts-node src/generate.ts",
     "update:packages": "npx npm-check-updates -u",
     "db:gen": "prisma generate",
     "db:studio": "prisma studio",
@@ -31,7 +30,6 @@
     "dotenv-cli": "^7.4.2",
     "fastify": "^4.28.1",
     "joi": "^17.13.3",
-    "joi-compiler": "^1.1.0",
     "jsonwebtoken": "^9.0.2",
     "pino": "^9.2.0"
   },
