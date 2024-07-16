@@ -1,5 +1,5 @@
 # Fastify-Typescript
-typescript based rest-API architecture with prisma and fastify framework.
+Typescript based rest-API boilerplate with prisma and fastify framework.
 
 ## How to use
 
