@@ -11,6 +11,7 @@ async function postRouter(fastify: FastifyInstance) {
     '/create',
     {
       schema: {
+        description: 'Create a new post',
         body: {
           type: 'object',
           properties: {
@@ -18,9 +19,6 @@ async function postRouter(fastify: FastifyInstance) {
           },
           required: ['content'],
         },
-      },
-      config: {
-        description: 'Create a new post',
       },
       preValidation: utils.preValidation(postCreateSchema),
       preHandler: [checkValidRequest, checkValidUser],
